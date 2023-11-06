@@ -4,32 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baseball Stats</title>
-    <style>
-        /* Add your CSS styles here */
-    </style>
 </head>
 <body>
-    <section id="view-stats">
-        <h2>View Stats</h2>
-        <button id="load-stats-button">Load</button>
-        <!-- Add content for viewing stats here -->
-    </section>
+    <h1>Welcome to the Baseball Stats Website</h1>
 
-    <section id="add-stats">
-        <h2>Add Stats</h2>
-        <button id="add-stats-button">Add</button>
-        <!-- Add form or content for adding stats here -->
-    </section>
+    <!-- View Stats Section -->
+    <h2>View Stats</h2>
+    <button id="view-stats-button">Game Stats</button>
+
+    <div id="view-stats-content" style="display: none;">
+        <h2>Game Stats</h2>
+
+        <!-- Table to display game stats -->
+        <table id="game-stats-table">
+            <!-- Table headers -->
+            <thead>
+                <tr>
+                    <th>Game ID</th>
+                    <th>Date</th>
+                    <th>Home Team</th>
+                    <th>Away Team</th>
+                    <th>Location</th>
+                    <th>Outcome</th>
+                </tr>
+            </thead>
+            <!-- Table body for data -->
+            <tbody>
+                {% for game in games %}
+                    <tr>
+                        <td>{{ game["game_id"] }}</td>
+                        <td>{{ game["date"] }}</td>
+                        <td>{{ game["homeTeam"] }}</td>
+                        <td>{{ game["awayTeam"] }}</td>
+                        <td>{{ game["location"] }}</td>
+                        <td>{{ game["outcome"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  <h2>Add New Game</h2>
+  <form method="post" action="/add_game">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required><br>
+
+      <label for="homeTeam">Home Team:</label>
+      <input type="text" id="homeTeam" name="homeTeam" required><br>
+
+      <label for="awayTeam">Away Team:</label>
+      <input type="text" id="awayTeam" name="awayTeam" required><br>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required><br>
+
+      <label for="outcome">Outcome:</label>
+      <input type="text" id="outcome" name="outcome" required><br>
+
+      <input type="submit" value="Add Game">
+  </form>
 
     <script>
-        // Add your JavaScript code here
-        document.getElementById("load-stats-button").addEventListener("click", function() {
-            // Add code to load and display stats
+        // JavaScript function to handle the "View Stats" button click
+        document.getElementById("view-stats-button").addEventListener("click", function() {
+            // Show the view-stats-content when the button is clicked
+            document.getElementById("view-stats-content").style.display = "block";
         });
 
-        document.getElementById("add-stats-button").addEventListener("click", function() {
-            // Add code to show the form or add stats
-        });
+        // Function to display game stats as a table
+        function displayGameStats() {
+            // Logic for displaying game stats (optional for client-side actions)
+        }
     </script>
 </body>
 </html>
