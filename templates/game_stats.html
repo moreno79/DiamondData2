@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Stats</title>
+</head>
+<body>
+  <button id="back-button">Back to Main Page</button>
+  <button id="filter-home-button">Filter by Home Team</button>
+  <select id="home-team-filter" style="display: none;">
+      <option value="">All</option>
+      {% for team in homeTeams %}
+          <option value="{{ team }}">{{ team }}</option>
+      {% endfor %}
+  </select>
+  <button id="filter-away-button">Filter by Away Team</button>
+  <select id="away-team-filter" style="display: none;">
+      <option value="">All</option>
+      {% for team in awayTeams %}
+          <option value="{{ team }}">{{ team }}</option>
+      {% endfor %}
+  </select>
+  <button id="filter-team-button">Filter by Team</button>
+  <select id="team-filter" style="display: none;">
+      <option value="">All</option>
+      {% for team in allTeams %}
+          <option value="{{ team }}">{{ team }}</option>
+      {% endfor %}
+  </select>
+  <button id="filter-location-button">Filter by Location</button>
+  <select id="location-filter" style="display: none;">
+      <option value="">All</option>
+      {% for location in locations %}
+          <option value="{{ location }}">{{ location }}</option>
+      {% endfor %}
+  </select>
+  <button id="delete-button">Delete Data</button>
+  <select id="delete-filter" style="display: none;">
+      <option value="">All</option>
+      {% for gameId in gameId %}
+          <option value="{{ gameId }}">{{ gameId }}</option>
+      {% endfor %}
+  </select>
+  <button id="edit-button">Edit Data</button>
+  <h2>Game List</h2>
+
+      <!-- Table to display game stats -->
+      <table id="game-stats-table">
+          <!-- Table headers -->
+          <thead>
+              <tr>
+                  <th>Game ID</th>
+                  <th>Date</th>
+                  <th>Home Team</th>
+                  <th>Home City</th> 
+                  <th>Away Team</th>
+                  <th>Away City</th> 
+                  <th>Location</th>
+                  <th>Outcome</th>
+              </tr>
+          </thead>
+          <!-- Table body for data -->
+          <tbody>
+              {% for game in games %}
+                  <tr>
+                    <td>{{ game["game_id"] }}</td>
+                    <td>{{ game["date"] }}</td>
+                    <td>{{ game["homeTeam"] }}</td>
+                    <td>{{ game["homeCity"] }}</td>
+                    <td>{{ game["awayTeam"] }}</td>
+                    <td>{{ game["awayCity"] }}</td>
+                    <td>{{ game["location"] }}</td>
+                    <td>{{ game["outcome"] }}</td>
+                    
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+  <div id="edit-game-form" style="display: none;">
+      <h2>Edit Game</h2>
+      <form method="post" action="/edit_game">
+          <!-- Edit game fields go here -->
+          <label for="edit-gameId">Game ID:</label>
+          <input type="text" id="edit-gameId" name="gameId" required><br>
+        
+          <label for="edit-date">Date:</label>
+          <input type="date" id="edit-date" name="date" required><br>
+
+          <label for="edit-homeTeam">Home Team:</label>
+          <input type="text" id="edit-homeTeam" name="homeTeam" required><br>
+
+          <label for="edit-homeCity">Home City:</label>
+          <input type="text" id="edit-homeCity" name="homeCity" required><br>
+
+          <label for="edit-awayTeam">Away Team:</label>
+          <input type="text" id="edit-awayTeam" name="awayTeam" required><br>
+
+          <label for="edit-awayCity">Away City:</label>
+          <input type="text" id="edit-awayCity" name="awayCity" required><br>
+
+          <label for="edit-location">Location:</label>
+          <input type="text" id="edit-location" name="location" required><br>
+
+          <label for="edit-outcome">Outcome:</label>
+          <input type="text" id="edit-outcome" name="outcome" required><br>
+
+          <input type="submit" value="Save Changes">
+          <button id="cancel-edit-button">Cancel</button>
+      </form>
+  </div>
+  <script>
+      document.getElementById("delete-button").addEventListener("click", function () {
+        // Toggle the display of the drop-down menu
+        const deleteFilter = document.getElementById("delete-filter");
+        deleteFilter.style.display = deleteFilter.style.display === "none" ? "block" : "none";
+      });
+      document.getElementById("delete-filter").addEventListener("change", function () {
+        const selectedGameID = this.value; // Get the selected home team
+        if (selectedGameID) {
+            // Create a data object with the selected game ID
+            const data = { game_id: selectedGameID };
+
+            // Send a POST request to the /delete_game route
+            fetch("/delete_game", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then((response) => {
+                if (response.ok) {
+                  window.location.href = "/game_stats";
+                } else {
+                    // Game deletion failed, show an error message
+                    alert('Failed to delete game. Please try again.');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('Failed to delete game. Please try again.');
+            });
+        }
+  
+    });
+      // JavaScript function to handle the back button click
+      document.getElementById("back-button").addEventListener("click", function () {
+          // Navigate back to the main page ("/")
+          window.location.href = "/";
+      });
+    // JavaScript function to handle the filter button click
+    document.getElementById("filter-home-button").addEventListener("click", function () {
+        // Toggle the display of the drop-down menu
+        const homeTeamFilter = document.getElementById("home-team-filter");
+        homeTeamFilter.style.display = homeTeamFilter.style.display === "none" ? "block" : "none";
+    });
+    document.getElementById("home-team-filter").addEventListener("change", function () {
+        const selectedHomeTeam = this.value; // Get the selected home team
+
+        // Filter the table based on the selected home team
+        const tableRows = document.querySelectorAll("#game-stats-table tbody tr");
+        tableRows.forEach(function (row) {
+            const homeTeamCell = row.querySelector("td:nth-child(3)"); // Assuming home team is in the third column
+            const displayStyle = selectedHomeTeam === "" || homeTeamCell.textContent === selectedHomeTeam ? "table-row" : "none";
+            row.style.display = displayStyle;
+        });
+    });
+    // JavaScript function to handle the filter by away button click
+    document.getElementById("filter-away-button").addEventListener("click", function () {
+        // Toggle the display of the awayTeam drop-down menu
+        const awayTeamFilter = document.getElementById("away-team-filter");
+        awayTeamFilter.style.display = awayTeamFilter.style.display === "none" ? "block" : "none";
+    });
+    // JavaScript function to handle the filter change
+    document.getElementById("away-team-filter").addEventListener("change", function () {
+        const selectedAwayTeam = this.value; // Get the selected away team
+
+        // Filter the table based on the selected away team
+        const tableRows = document.querySelectorAll("#game-stats-table tbody tr");
+        tableRows.forEach(function (row) {
+            const awayTeamCell = row.querySelector("td:nth-child(5)"); // Assuming away team is in the fifth column
+            const displayStyle = selectedAwayTeam === "" || awayTeamCell.textContent === selectedAwayTeam ? "table-row" : "none";
+            row.style.display = displayStyle;
+        });
+    });
+    // JavaScript function to handle the filter by team button click
+    document.getElementById("filter-team-button").addEventListener("click", function () {
+        // Toggle the display of the team drop-down menu
+        const teamFilter = document.getElementById("team-filter");
+        teamFilter.style.display = teamFilter.style.display === "none" ? "block" : "none";
+    });
+    // JavaScript function to handle the filter change
+    document.getElementById("team-filter").addEventListener("change", function () {
+        const selectedTeam = this.value; // Get the selected team
+
+        // Filter the table based on the selected team
+        const tableRows = document.querySelectorAll("#game-stats-table tbody tr");
+        tableRows.forEach(function (row) {
+            const homeTeamCell = row.querySelector("td:nth-child(3)"); // Assuming home team is in the third column
+            const awayTeamCell = row.querySelector("td:nth-child(5)"); // Assuming away team is in the fifth column
+            const displayStyle = selectedTeam === "" || homeTeamCell.textContent === selectedTeam || awayTeamCell.textContent === selectedTeam ? "table-row" : "none";
+            row.style.display = displayStyle;
+        });
+    });
+    // JavaScript function to handle the filter button click
+    document.getElementById("filter-location-button").addEventListener("click", function () {
+        // Toggle the display of the drop-down menu
+        const locationFilter = document.getElementById("location-filter");
+        locationFilter.style.display = locationFilter.style.display === "none" ? "block" : "none";
+    });
+    document.getElementById("location-filter").addEventListener("change", function () {
+        const selectedLocation = this.value; // Get the selected home team
+
+        // Filter the table based on the selected home team
+        const tableRows = document.querySelectorAll("#game-stats-table tbody tr");
+        tableRows.forEach(function (row) {
+            const locationCell = row.querySelector("td:nth-child(7)"); // Assuming home team is in the third column
+            const displayStyle = selectedLocation === "" || locationCell.textContent === selectedLocation ? "table-row" : "none";
+            row.style.display = displayStyle;
+        });
+    });
+  </script>
+  <script>
+      document.getElementById("edit-button").addEventListener("click", function () {
+          const editForm = document.getElementById("edit-game-form");
+          editForm.style.display = editForm.style.display === "none" ? "block" : "none";
+      });
+  </script>
+</body>
+</html>

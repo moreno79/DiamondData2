@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Game Stats</title>
+</head>
+<body>
+    <h2>Update Game Stats</h2>
+    <form method="post" action="/update_game">
+        <label for="game_id">Game ID:</label>
+        <input type="text" id="game_id" name="game_id" required><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br>
+
+        <label for="homeTeam">Home Team:</label>
+        <input type="text" id="homeTeam" name="homeTeam" required><br>
+
+        <label for="awayTeam">Away Team:</label>
+        <input type="text" id="awayTeam" name="awayTeam" required><br>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required><br>
+
+        <label for="outcome">Outcome:</label>
+        <input type="text" id="outcome" name="outcome" required><br>
+
+        <input type="submit" value="Update Game">
+    </form>
+</body>
+</html>

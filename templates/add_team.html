@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Team</title>
+</head>
+<body>
+    <h2>Add New Team</h2>
+    <form method="post" action="/add_team">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required><br>
+
+        <input type="submit" value="Add Team">
+    </form>
+  <button id="back-button">Back to Main Page</button>
+      </form>
+    <script>
+        // JavaScript function to handle the back button click
+        document.getElementById("back-button").addEventListener("click", function () {
+            // Navigate back to the main page ("/")
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>

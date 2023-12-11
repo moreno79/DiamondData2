@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Stats</title>
+</head>
+<body>
+  <button id="back-button">Back to Main Page</button>
+    <h2>Team List</h2>
+    <!-- Table to display team stats -->
+    <table id="team-stats-table">
+        <!-- Table headers -->
+        <thead>
+            <tr>
+                <th>Team ID</th>
+                <th>Name</th>
+                <th>City</th>
+                <!-- Add additional columns as needed for team stats -->
+            </tr>
+        </thead>
+        <!-- Table body for data -->
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{ team["team_id"] }}</td>
+                    <td>{{ team["name"] }}</td>
+                    <td>{{ team["city"] }}</td>
+                    <!-- Add additional columns as needed for team stats -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+  <script>
+      // JavaScript function to handle the back button click
+      document.getElementById("back-button").addEventListener("click", function () {
+          // Navigate back to the main page ("/")
+          window.location.href = "/";
+      });
+  </script>
+</body>
+</html>

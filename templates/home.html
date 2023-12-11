@@ -3,72 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baseball Stats</title>
+    <title>Baseball Tracker</title>
 </head>
 <body>
-    <h1>Welcome to the Baseball Stats Website</h1>
+    <h1>Welcome to the Baseball Tracker Website</h1>
 
     <!-- View Stats Section -->
-    <h2>View Stats</h2>
-    <button id="view-stats-button">Game Stats</button>
+  <h2>View Data</h2>
+  <button id="view-all-stats-button">All Lists</button>
+  <button id="view-game-stats-button">Game List</button>
+  <button id="view-team-stats-button">Team List</button>
+  <button id="view-player-stats-button">Player List</button>
+  
+  
+  </div>
+  <!-- Add New Game Section -->
+  <h2>Add Data</h2>
+  <button id="add-game-button">Add Game</button>
+  <button id="add-team-button">Add Team</button>
+  <button id="add-player-button">Add Player</button>
 
-    <div id="view-stats-content" style="display: none;">
-        <h2>Game Stats</h2>
-
-        <!-- Table to display game stats -->
-        <table id="game-stats-table">
-            <!-- Table headers -->
-            <thead>
-                <tr>
-                    <th>Game ID</th>
-                    <th>Date</th>
-                    <th>Home Team</th>
-                    <th>Away Team</th>
-                    <th>Location</th>
-                    <th>Outcome</th>
-                </tr>
-            </thead>
-            <!-- Table body for data -->
-            <tbody>
-                {% for game in games %}
-                    <tr>
-                        <td>{{ game["game_id"] }}</td>
-                        <td>{{ game["date"] }}</td>
-                        <td>{{ game["homeTeam"] }}</td>
-                        <td>{{ game["awayTeam"] }}</td>
-                        <td>{{ game["location"] }}</td>
-                        <td>{{ game["outcome"] }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-  <h2>Add New Game</h2>
-  <form method="post" action="/add_game">
-      <label for="date">Date:</label>
-      <input type="date" id="date" name="date" required><br>
-
-      <label for="homeTeam">Home Team:</label>
-      <input type="text" id="homeTeam" name="homeTeam" required><br>
-
-      <label for="awayTeam">Away Team:</label>
-      <input type="text" id="awayTeam" name="awayTeam" required><br>
-
-      <label for="location">Location:</label>
-      <input type="text" id="location" name="location" required><br>
-
-      <label for="outcome">Outcome:</label>
-      <input type="text" id="outcome" name="outcome" required><br>
-
-      <input type="submit" value="Add Game">
-  </form>
+  <script>
+      // JavaScript function to handle the "Add Game" button click
+      document.getElementById("add-game-button").addEventListener("click", function() {
+          // Navigate to the "Add New Game" page (add_game.html)
+          window.location.href = "/add_game.html";
+      });
+    document.getElementById("add-team-button").addEventListener("click", function() {
+        // Navigate to the "Add New Game" page (add_game.html)
+        window.location.href = "/add_team.html";
+    });
+    document.getElementById("add-player-button").addEventListener("click", function() {
+        // Navigate to the "Add New Game" page (add_game.html)
+        window.location.href = "/add_player.html";
+    });
+  </script>
 
     <script>
         // JavaScript function to handle the "View Stats" button click
-        document.getElementById("view-stats-button").addEventListener("click", function() {
-            // Show the view-stats-content when the button is clicked
-            document.getElementById("view-stats-content").style.display = "block";
+        document.getElementById("view-game-stats-button").addEventListener("click", function() {
+          window.location.href = "/game_stats.html";
         });
+      // JavaScript function to handle the "View Stats" button click
+      document.getElementById("view-player-stats-button").addEventListener("click", function() {
+        window.location.href = "/player_stats.html";
+      });
+      // JavaScript function to handle the "View Stats" button click
+      document.getElementById("view-team-stats-button").addEventListener("click", function() {
+          // Show the view-stats-content when the button is clicked
+        window.location.href = "/team_stats.html";
+      });
+      // Function to open the All Stats page
+      document.getElementById("view-all-stats-button").addEventListener("click", function () {
+          window.location.href = "/all_stats.html";
+      });
+
 
         // Function to display game stats as a table
         function displayGameStats() {

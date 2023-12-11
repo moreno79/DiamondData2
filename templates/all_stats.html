@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Stats</title>
+</head>
+<body>
+  <button id="back-button">Back to Main Page</button>
+  <h2>Game List</h2>
+
+      <!-- Table to display game stats -->
+      <table id="game-stats-table">
+          <!-- Table headers -->
+          <thead>
+              <tr>
+                  <th>Game ID</th>
+                  <th>Date</th>
+                  <th>Home Team</th>
+                  <th>Home City</th> 
+                  <th>Away Team</th>
+                  <th>Away City</th> 
+                  <th>Location</th>
+                  <th>Outcome</th>
+              </tr>
+          </thead>
+          <!-- Table body for data -->
+          <tbody>
+              {% for game in games %}
+                  <tr>
+                      <td>{{ game["game_id"] }}</td>
+                      <td>{{ game["date"] }}</td>
+                      <td>{{ game["homeTeam"] }}</td>
+                      <td>{{ game["homeCity"] }}</td> 
+                      <td>{{ game["awayTeam"] }}</td>
+                      <td>{{ game["awayCity"] }}</td> 
+                      <td>{{ game["location"] }}</td>
+                      <td>{{ game["outcome"] }}</td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    <h2>Player List</h2>
+    <!-- Table to display player stats -->
+    <table id="player-stats-table">
+        <!-- Table headers -->
+        <thead>
+            <tr>
+                <th>Player ID</th>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Team</th>
+                <th>Team City</th>
+                <!-- Add additional columns as needed for player stats -->
+            </tr>
+        </thead>
+        <!-- Table body for data -->
+        <tbody>
+            {% for player in players %}
+                <tr>
+                    <td>{{ player["player_id"] }}</td>
+                    <td>{{ player["name"] }}</td>
+                    <td>{{ player["salary"] }}</td>
+                    <td>{{ player["team"] }}</td>
+                    <td>{{ player["teamCity"] }}</td>
+                    <!-- Add additional columns as needed for player stats -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Team List</h2>
+    <!-- Table to display team stats -->
+    <table id="team-stats-table">
+        <!-- Table headers -->
+        <thead>
+            <tr>
+                <th>Team ID</th>
+                <th>Name</th>
+                <th>City</th>
+                <!-- Add additional columns as needed for team stats -->
+            </tr>
+        </thead>
+        <!-- Table body for data -->
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{ team["team_id"] }}</td>
+                    <td>{{ team["name"] }}</td>
+                    <td>{{ team["city"] }}</td>
+                    <!-- Add additional columns as needed for team stats -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+  <script>
+      // JavaScript function to handle the back button click
+      document.getElementById("back-button").addEventListener("click", function () {
+          // Navigate back to the main page ("/")
+          window.location.href = "/";
+      });
+  </script>
+</body>
+</html>

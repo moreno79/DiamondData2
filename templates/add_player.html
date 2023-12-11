@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Player</title>
+</head>
+<body>
+    <h2>Add New Player</h2>
+    <form method="post" action="/add_player">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="salary">Salary:</label>
+        <input type="text" id="salary" name="salary" required><br>
+
+        <label for="team">Team:</label>
+        <input type="text" id="team" name="team" required><br>
+
+        <label for="teamCity">Team City:</label>
+        <input type="text" id="teamCity" name="teamCity" required><br>
+
+        <!-- Add additional fields as needed for player details -->
+
+        <input type="submit" value="Add Player">
+      <button id="back-button">Back to Main Page</button>
+    </form>
+  <script>
+      // JavaScript function to handle the back button click
+      document.getElementById("back-button").addEventListener("click", function () {
+          // Navigate back to the main page ("/")
+          window.location.href = "/";
+      });
+  </script>
+</body>
+</html>

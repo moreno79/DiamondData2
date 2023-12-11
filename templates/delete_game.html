@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Game</title>
+</head>
+<body>
+  <button id="back-button">Back to Main Page</button>
+  <h2>Current Game Stats</h2>
+
+      <!-- Table to display game stats -->
+      <table id="game-stats-table">
+          <!-- Table headers -->
+          <thead>
+              <tr>
+                  <th>Game ID</th>
+                  <th>Date</th>
+                  <th>Home Team</th>
+                  <th>Home City</th> 
+                  <th>Away Team</th>
+                  <th>Away City</th> 
+                  <th>Location</th>
+                  <th>Outcome</th>
+              </tr>
+          </thead>
+          <!-- Table body for data -->
+          <tbody>
+              {% for game in games %}
+                  <tr>
+                      <td>{{ game["game_id"] }}</td>
+                      <td>{{ game["date"] }}</td>
+                      <td>{{ game["homeTeam"] }}</td>
+                      <td>{{ game["homeCity"] }}</td> 
+                      <td>{{ game["awayTeam"] }}</td>
+                      <td>{{ game["awayCity"] }}</td> 
+                      <td>{{ game["location"] }}</td>
+                      <td>{{ game["outcome"] }}</td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    <h2>Delete Game</h2>
+    <form method="post" action="/delete_game">
+        <label for="game_id">Game ID:</label>
+        <input type="text" id="game_id" name="game_id" required><br>
+
+        <input type="submit" value="Delete Game">
+    </form>
+  <script>
+      // JavaScript function to handle the back button click
+      document.getElementById("back-button").addEventListener("click", function () {
+          // Navigate back to the main page ("/")
+          window.location.href = "/";
+      });
+  </script>
+</body>
+</html>
