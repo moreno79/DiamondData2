@@ -31,7 +31,8 @@ def delete_game():
         sql = "DELETE FROM game WHERE game_id = %s"
         cursor.execute(sql, (selected_game_id,))
         db.commit()
-
+    return redirect('/')
+    
     return jsonify({'message': 'Game deleted successfully'}), 200
 
   except Exception as e:
@@ -67,10 +68,27 @@ def edit_game():
             # Execute the SQL query with the data and gameId as parameters
             cursor.execute(update_query, (date, home_team, home_city, away_team, away_city, location, outcome, game_id))
 
+            session = Session()
+            existing_home_team = session.query(Team).filter_by(name=home_team).first()
+            if not existing_home_team:
+                # Create a new Team object for the home team
+                new_home_team = Team(name=home_team, city=home_city)
+                session.add(new_home_team)
+
+            # Check if the away team exists in the team table
+            existing_away_team = session.query(Team).filter_by(name=away_team).first()
+            if not existing_away_team:
+                # Create a new Team object for the away team
+                new_away_team = Team(name=away_team, city=away_city)
+                session.add(new_away_team)
+
+            
             # Commit the changes to the database
+            session.commit()
             db.commit()
 
             # Close the cursor
+            session.close()
             cursor.close()
 
             # Redirect to the game stats page or a confirmation page
